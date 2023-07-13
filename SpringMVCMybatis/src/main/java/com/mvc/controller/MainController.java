@@ -1,5 +1,7 @@
 package com.mvc.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -36,8 +38,10 @@ public class MainController {
 	public ModelAndView memberList(ModelAndView view) {
 		//1. 전체 회원 정보를 DB에서 조회해서 가져옴
 		//     - List로 받음
-		
+		List<MemberDTO> list = service.selectAllMember();
 		//2. request 영역에 읽어온 전체회원 정보를 저장
+		view.addObject("list", list);
+		view.setViewName("main");
 		return view;
 	}
 }

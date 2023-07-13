@@ -1,5 +1,6 @@
 package com.mvc.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -10,5 +11,7 @@ import com.mvc.dto.MemberDTO;
 public interface MemberMapper {
 
 	MemberDTO login(Map<String, Object> map);
+
+	List<MemberDTO> selectAllMember();
 
 }

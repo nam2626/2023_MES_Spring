@@ -1,6 +1,7 @@
 package com.mvc.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -22,6 +23,10 @@ public class MemberService {
 		map.put("passwd", passwd);
 		
 		return mapper.login(map);
+	}
+
+	public List<MemberDTO> selectAllMember() {
+		return mapper.selectAllMember();
 	}
 	
 	
