@@ -43,7 +43,7 @@ td, th {
 		$('.btn_search').click(function(){
 			let data = $('form').serialize();
 			$.ajax({
-				url: 'search',
+				url: '/member/search',
 				data : data,
 				type : 'post',
 				dataType: 'json',
@@ -52,7 +52,7 @@ td, th {
 					let tag = '';
 					for(let i=0;i<r.length;i++){
 						tag += `<tr>`;
-						tag += `<td><a href="detail?id=\${r[i].memberId}">\${ r[i].memberId}</a></td>`;
+						tag += `<td><a href="/member/detail/\${r[i].memberId}">\${ r[i].memberId}</a></td>`;
 						tag += `<td>\${ r[i].name}</td>`;
 						tag += `<td>\${ r[i].age}</td>`;
 						tag += `<td>\${ r[i].gender}</td>`;

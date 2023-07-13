@@ -44,6 +44,13 @@ public class MemberService {
 	public int deleteMember(String id) {
 		return mapper.deleteMember(id);
 	}
+
+	public List<MemberDTO> searchMember(String kind, String search) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("kind", kind);
+		map.put("search", search);
+		return mapper.searchMember(map);
+	}
 	
 	
 }

@@ -90,6 +90,12 @@ public class MainController {
 		
 		return new ResponseEntity(map,HttpStatus.OK);
 	}
+	
+	@RequestMapping("/member/search")
+	public ResponseEntity<String> search(String kind, String search){
+		List<MemberDTO> list = service.searchMember(kind,search);
+		return new ResponseEntity(list,HttpStatus.OK);
+	}
 }
 
 
