@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.MemberMapper">
+	<resultMap type="dto.MemberDTO" id="member">
+		<id column="member_id" property="memberId"/>
+		<result column="member_passwd" property="passwd"/>
+		<result column="member_name" property="name"/>
+		<result column="member_age" property="age"/>
+		<result column="member_gender" property="gender"/>
+	</resultMap>
+	<resultMap type="dto.GradeDTO" id="grade">
+		<id column="grade_no" property="gradeNo"/>
+		<result column="grade_name" property="gradeName"/>		
+	</resultMap>
+  	
+  	<insert id="insertMember" parameterType="dto.MemberDTO">
+  		insert into member values(#{memberId},#{passwd},#{name},#{age},#{gender})
+  	</insert>
+  	
+  	<select id="login" parameterType="Map" resultMap="member">
+  		select * from member where member_id like #{id} and member_passwd like #{passwd}
+  	</select>
+  	
+  	<select id="selectAllMember" resultMap="member">
+  		select * from member
+  	</select>
+  	
+  	<select id="selectMember" parameterType="String" resultMap="member">
+  		select * from member where member_id like #{id}
+  	</select>
+  	
+  	<select id="searchMember" parameterType="Map" resultMap="member">
+  		select * from member
+  		<choose>
+  			<when test="search == null"></when>
+  			<when test="kind.equals('member_gender')">
+  				where ${kind} like #{search}
+  			</when>
+  			<otherwise>
+  				where ${kind} like '%' || #{search} || '%'
+  			</otherwise>
+  		</choose>
+  	</select>
+  	
+  	<delete id="deleteMember" parameterType="String">
+  		delete from member where member_id like #{value}
+  	</delete>
+  	
+  	<update id="updateMember" parameterType="dto.MemberDTO">
+  		update member set member_passwd = #{passwd}, member_name = #{name},
+  			member_age = #{age}, member_gender = #{gender}
+  		where member_id like #{memberId}
+  	</update>
+  	
+  	<select id="selectAllGrade" resultMap="grade">
+  		select * from board_member_grade order by grade_no
+  	</select>
+  	
+  	<select id="selectGrade" parameterType="String" resultMap="grade">
+  		select * from board_member_grade 
+  		where grade_name like '%' || #{search} || '%'
+  		order by grade_no
+  	</select>
+  	
+  	<insert id="insertGrade" parameterType="dto.GradeDTO">
+  		insert into board_member_grade values(#{gradeNo},#{gradeName})
+  	</insert>
+  	
+  	<update id="updateGrade" parameterType="dto.GradeDTO">
+  		update board_member_grade set grade_name = #{gradeName}
+  		where grade_no = #{gradeNo}
+  	</update>
+  	
+  	<delete id="deleteGrade" parameterType="int">
+  		delete from board_member_grade where grade_no = #{gradeNo}
+  	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
