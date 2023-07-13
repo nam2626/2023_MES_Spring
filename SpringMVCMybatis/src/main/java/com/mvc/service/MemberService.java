@@ -40,6 +40,10 @@ public class MemberService {
 	public int updateMember(MemberDTO dto) {
 		return mapper.updateMember(dto);
 	}
+
+	public int deleteMember(String id) {
+		return mapper.deleteMember(id);
+	}
 	
 	
 }

@@ -23,21 +23,16 @@ td, th {
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
 	function delete_member(){
-		//alert($(this).parent().parent().children().first().text());
-		let data = `id=\${$(this).parent().parent().children().first().text()}`;
-		console.log(data);
 		$.ajax({
-			url : 'delete',
-			data : data,
+			url : '/member/delete/'+$(this).parent().parent().children().first().text(),
 			type : 'post',
+			dataType : 'json',
 			success:(r)=>{
-				console.log(typeof r, typeof "0");
-				
-				if(Number(r) == 0){
-					alert('데이터 삭제 실패');
+				if(Number(r.count) == 0){
+					alert(r.message);
 					location.reload();
 				}else{
-					alert('데이터 삭제 성공');
+					alert(r.message);
 					console.log($(this).parent().parent());
 					$(this).parent().parent().remove();
 				}				

@@ -1,9 +1,13 @@
 package com.mvc.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.connector.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,6 +76,19 @@ public class MainController {
 	public String update(MemberDTO dto) {
 		service.updateMember(dto);
 		return "redirect:/main";
+	}
+	
+	@RequestMapping("/member/delete/{id}")
+	public ResponseEntity<String> delete(@PathVariable String id){
+		int result = service.deleteMember(id);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("count", result);
+		if(result == 0)
+			map.put("message", "데이터 삭제 실패");
+		else
+			map.put("message", "데이터 삭제 성공");
+		
+		return new ResponseEntity(map,HttpStatus.OK);
 	}
 }
 
