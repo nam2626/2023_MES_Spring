@@ -3,19 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mvc.mapper.MemberMapper">
-	<resultMap type="com.mvc.dto.MemberDTO" id="member">
+	<resultMap type="member" id="member">
 		<id column="member_id" property="memberId"/>
 		<result column="member_passwd" property="passwd"/>
 		<result column="member_name" property="name"/>
 		<result column="member_age" property="age"/>
 		<result column="member_gender" property="gender"/>
 	</resultMap>
-	<resultMap type="com.mvc.dto.GradeDTO" id="grade">
+	<resultMap type="grade" id="grade">
 		<id column="grade_no" property="gradeNo"/>
 		<result column="grade_name" property="gradeName"/>		
 	</resultMap>
   	
-  	<insert id="insertMember" parameterType="com.mvc.dto.MemberDTO">
+  	<insert id="insertMember" parameterType="member">
   		insert into member values(#{memberId},#{passwd},#{name},#{age},#{gender})
   	</insert>
   	
@@ -48,7 +48,7 @@
   		delete from member where member_id like #{value}
   	</delete>
   	
-  	<update id="updateMember" parameterType="com.mvc.dto.MemberDTO">
+  	<update id="updateMember" parameterType="member">
   		update member set member_passwd = #{passwd}, member_name = #{name},
   			member_age = #{age}, member_gender = #{gender}
   		where member_id like #{memberId}
@@ -64,11 +64,11 @@
   		order by grade_no
   	</select>
   	
-  	<insert id="insertGrade" parameterType="com.mvc.dto.GradeDTO">
+  	<insert id="insertGrade" parameterType="grade">
   		insert into board_member_grade values(#{gradeNo},#{gradeName})
   	</insert>
   	
-  	<update id="updateGrade" parameterType="com.mvc.dto.GradeDTO">
+  	<update id="updateGrade" parameterType="grade">
   		update board_member_grade set grade_name = #{gradeName}
   		where grade_no = #{gradeNo}
   	</update>

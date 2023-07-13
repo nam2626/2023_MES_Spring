@@ -1,5 +1,8 @@
 package com.mvc.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("grade")
 public class GradeDTO {
 	private int gradeNo;
 	private String gradeName;

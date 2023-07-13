@@ -1,5 +1,8 @@
 package com.mvc.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("member")
 public class MemberDTO {
 	private String memberId;
 	private String passwd;
