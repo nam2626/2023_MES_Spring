@@ -32,8 +32,8 @@
 <body>
 	<jsp:include page="template/header.jsp"></jsp:include>
 	<div class="container">
-		<form action="update" method="post">
-			<input type="text" name="id" value="${member.memberId }" readonly><br>
+		<form action="/member/update" method="post">
+			<input type="text" name="memberId" value="${member.memberId }" readonly><br>
 			<input type="password" name="passwd" placeholder="새 암호 입력" required><br>
 			<input type="text" name="name" placeholder="이름 입력" value="${member.name }"><br>
 			<input type="text" name="age" placeholder="나이 입력" value="${member.age }"><br>

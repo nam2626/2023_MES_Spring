@@ -67,6 +67,12 @@ public class MainController {
 		view.setViewName("member_update_view");
 		return view;
 	}
+	
+	@RequestMapping("/member/update")
+	public String update(MemberDTO dto) {
+		service.updateMember(dto);
+		return "redirect:/main";
+	}
 }
 
 
