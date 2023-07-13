@@ -32,6 +32,10 @@ public class MemberService {
 	public int insertMember(MemberDTO dto) {
 		return mapper.insertMember(dto);
 	}
+
+	public MemberDTO selectMember(String id) {
+		return mapper.selectMember(id);
+	}
 	
 	
 }

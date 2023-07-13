@@ -45,7 +45,7 @@
 <c:if test="${sessionScope.user == null }">
 	<script>
 		alert('로그인 정보가 없습니다.');
-		location.href = "index.jsp";
+		location.href = "/";
 	</script>
 
 </c:if>

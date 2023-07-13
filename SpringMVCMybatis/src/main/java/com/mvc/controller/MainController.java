@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,6 +58,14 @@ public class MainController {
 		//사용자가 보낸 데이터를 받아서 service에 전달  
 		int result = service.insertMember(dto);
 		return "redirect:/main";
+	}
+	
+	@RequestMapping("/member/detail/{id}")
+	public ModelAndView detail(@PathVariable String id, ModelAndView view) {
+		MemberDTO dto = service.selectMember(id);
+		view.addObject("member", dto);
+		view.setViewName("member_update_view");
+		return view;
 	}
 }
 
