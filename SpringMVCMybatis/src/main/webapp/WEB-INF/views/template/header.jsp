@@ -31,10 +31,10 @@
 	}
 </style>
 <ul class="main_menu">
-  <li><a href="index.jsp">홈</a></li>
-  <li><a href="main">회원목록</a></li>
-  <li><a href="member_register.jsp">회원추가</a></li>
-  <li><a href="grade">등급관리</a></li>
+  <li><a href="/">홈</a></li>
+  <li><a href="/main">회원목록</a></li>
+  <li><a href="/member/register/view">회원추가</a></li>
+  <li><a href="/grade">등급관리</a></li>
 </ul>
 <!-- 
 	로그인 정보가 없으면 index.jsp로 이동하게끔 처리

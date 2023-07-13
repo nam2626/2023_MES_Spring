@@ -28,8 +28,8 @@
 <body>
 <jsp:include page="template/header.jsp"></jsp:include>
 <div class="container">
-	<form action="register" method="post">
-		<input type="text" name="id" placeholder="아이디 입력"><br>		
+	<form action="/member/register/action" method="post">
+		<input type="text" name="memberId" placeholder="아이디 입력"><br>		
 		<input type="password" name="passwd" placeholder="암호 입력"><br>		
 		<input type="text" name="name" placeholder="이름 입력"><br>		
 		<input type="text" name="age" placeholder="나이 입력"><br>

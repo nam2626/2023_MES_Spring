@@ -11,7 +11,7 @@ import com.mvc.dto.MemberDTO;
 public interface MemberMapper {
 
 	MemberDTO login(Map<String, Object> map);
-
 	List<MemberDTO> selectAllMember();
+	int insertMember(MemberDTO dto);
 
 }

@@ -44,6 +44,20 @@ public class MainController {
 		view.setViewName("main");
 		return view;
 	}
+	
+	//1. member_register.jsp로 이동하는 메서드 작성
+	@RequestMapping("/member/register/view")
+	public String registerView() {
+		return "member_register";
+	}
+	
+	//2. 등록할 회원정보를 받아서 DB에 등록하는 메서드 작성
+	@RequestMapping("/member/register/action")
+	public String register(MemberDTO dto) {
+		//사용자가 보낸 데이터를 받아서 service에 전달  
+		int result = service.insertMember(dto);
+		return "redirect:/main";
+	}
 }
 
 

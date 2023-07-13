@@ -28,6 +28,10 @@ public class MemberService {
 	public List<MemberDTO> selectAllMember() {
 		return mapper.selectAllMember();
 	}
+
+	public int insertMember(MemberDTO dto) {
+		return mapper.insertMember(dto);
+	}
 	
 	
 }
