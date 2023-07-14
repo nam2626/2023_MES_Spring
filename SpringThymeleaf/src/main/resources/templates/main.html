@@ -99,7 +99,7 @@
       </thead>
       <tbody>
           <tr th:each="m : ${list}">
-            <td><a href="">[[${ m.memberId}]]</a></td>
+            <td><a th:href="@{/member/detail/{id}(id=${m.memberId})}">[[${ m.memberId}]]</a></td>
             <td>[[${ m.name}]]</td>
             <td>[[${ m.age}]]</td>
             <td>[[${ m.gender}]]</td>
