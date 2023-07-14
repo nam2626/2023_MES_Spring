@@ -96,6 +96,13 @@ public class MainController {
 		List<MemberDTO> list = service.searchMember(kind,search);
 		return new ResponseEntity(list,HttpStatus.OK);
 	}
+	
+	@RequestMapping("/grade")
+	public ModelAndView gradeMain(ModelAndView view) {
+		//전체 회원 등급을 가져옴
+		view.setViewName("grade_manage");
+		return view;
+	}
 }
 
 

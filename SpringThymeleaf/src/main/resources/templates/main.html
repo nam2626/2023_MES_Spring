@@ -18,7 +18,7 @@
   </style>
   <script
     src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-  <script>
+  <script th:inline='javascript'>
     function delete_member(){
       $.ajax({
         url : '/member/delete/'+$(this).parent().parent().children().first().text(),
@@ -37,6 +37,9 @@
       });
     }
     $(function(){
+		let tt = 'test';
+		let data = `[[${session.user.memberId}]],${tt}`;
+		console.log(data);
       $('.btn_search').click(function(){
         let data = $('form').serialize();
         $.ajax({
@@ -49,10 +52,10 @@
             let tag = '';
             for(let i=0;i<r.length;i++){
               tag += `<tr>`;
-              tag += `<td><a href="/member/detail/\${r[i].memberId}">\${ r[i].memberId}</a></td>`;
-              tag += `<td>\${ r[i].name}</td>`;
-              tag += `<td>\${ r[i].age}</td>`;
-              tag += `<td>\${ r[i].gender}</td>`;
+              tag += `<td><a href="/member/detail/${r[i].memberId}">${ r[i].memberId}</a></td>`;
+              tag += `<td>${ r[i].name}</td>`;
+              tag += `<td>${ r[i].age}</td>`;
+              tag += `<td>${ r[i].gender}</td>`;
               tag += `<td><button type='button' class='btn_delete'>삭제</button></td>`;
               tag += `</tr>`;
             }
