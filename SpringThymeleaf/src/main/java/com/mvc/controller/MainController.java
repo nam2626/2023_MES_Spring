@@ -122,8 +122,8 @@ public class MainController {
 	}
 	
 	@RequestMapping("/grade/search")
-	public ResponseEntity<String> searchGrade(String search){
-		List<GradeDTO> list = gradeService.searchGrade(search);
+	public ResponseEntity<String> searchGrade(String grade_name){
+		List<GradeDTO> list = gradeService.searchGrade(grade_name);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		return new ResponseEntity(map,HttpStatus.OK);
