@@ -10,5 +10,6 @@ import com.mvc.dto.GradeDTO;
 public interface GradeMapper {
 
 	List<GradeDTO> selectAllGrade();
+	int insertGrade(GradeDTO dto);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -108,6 +109,18 @@ public class MainController {
 		view.setViewName("grade_manage");
 		return view;
 	}
+	
+	@PostMapping("/grade/append")
+	public ResponseEntity<String> registerGrade(int grade_no, String grade_name){
+		GradeDTO dto = new GradeDTO(grade_no, grade_name);
+		int result = gradeService.insertGrade(dto);
+		List<GradeDTO> list = gradeService.selectAllGrade();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("result", result);
+		map.put("list", list);
+		return new ResponseEntity(map,HttpStatus.OK);
+	}
+	
 }
 
 

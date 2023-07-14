@@ -68,7 +68,7 @@
 			let data = $(this).serialize();
 			
 			$.ajax({
-				url : 'grade/append',
+				url : '/grade/append',
 				data : data,
 				type : 'post',
 				dataType : 'json',
@@ -81,8 +81,8 @@
 						let tag = '';
 						for(let i=0;i<r.list.length;i++){
 							tag += `<p>`;
-							tag += `<input type='text' class='grade_no' value='\${r.list[i].gradeNo }' readonly>`;
-							tag += `<input type='text' class='grade_name' value='\${r.list[i].gradeName }'>`;
+							tag += `<input type='text' class='grade_no' value='${r.list[i].gradeNo }' readonly>`;
+							tag += `<input type='text' class='grade_name' value='${r.list[i].gradeName }'>`;
 							tag += `<button class='btn_update'>수정</button>`;
 							tag += `<button class='btn_delete'>삭제</button>`;
 							tag += `</p>`;

@@ -18,6 +18,10 @@ public class GradeService {
 	public List<GradeDTO> selectAllGrade() {
 		return mapper.selectAllGrade();
 	}
+
+	public int insertGrade(GradeDTO dto) {
+		return mapper.insertGrade(dto);
+	}
 	
 	
 }
