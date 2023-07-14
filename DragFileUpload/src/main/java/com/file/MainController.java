@@ -96,6 +96,11 @@ public class MainController {
 
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
+	
+	@RequestMapping("/ajax")
+	public String main() {
+		return "ajax_upload.html";
+	}
 }
 
 
