@@ -121,6 +121,29 @@ public class MainController {
 		return new ResponseEntity(map,HttpStatus.OK);
 	}
 	
+	@RequestMapping("/grade/search")
+	public ResponseEntity<String> searchGrade(String search){
+		List<GradeDTO> list = gradeService.searchGrade(search);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		return new ResponseEntity(map,HttpStatus.OK);
+	}
+	
+	@RequestMapping("/grade/delete")
+	public ResponseEntity<String> deleteGrade(int grade_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int result = gradeService.deleteGrade(grade_no);
+		map.put("result", result);
+		return new ResponseEntity(map,HttpStatus.OK);
+	}
+	@PostMapping("/grade/update")
+	public ResponseEntity<String> updateGrade(int grade_no, String grade_name){
+		GradeDTO dto = new GradeDTO(grade_no, grade_name);
+		int result = gradeService.updateGrade(dto);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("result", result);
+		return new ResponseEntity(map,HttpStatus.OK);
+	}
 }
 
 
