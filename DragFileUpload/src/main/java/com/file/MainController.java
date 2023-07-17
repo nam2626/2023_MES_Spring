@@ -67,6 +67,7 @@ public class MainController {
 		}
 		//전체 파일 정보 읽어오는 작업
 		list = mapper.selectAllFile();
+		request.setAttribute("list", list);
 		return "result";
 	}
 	
