@@ -120,9 +120,9 @@ public class MainController {
 	@RequestMapping("/filedown")
 	public void fileDown(int fno, HttpServletResponse response) {
 		FileDTO dto = mapper.selectFile(fno);
-		
+		File file = new File(dto.getFpath());
 		try(BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
-			FileInputStream fis = new FileInputStream(dto.getFpath());){
+			FileInputStream fis = new FileInputStream(file);){
 			
 			byte[] buffer = new byte[1024*1024];
 			
