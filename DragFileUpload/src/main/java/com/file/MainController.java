@@ -121,6 +121,11 @@ public class MainController {
 	public void fileDown(int fno, HttpServletResponse response) {
 		FileDTO dto = mapper.selectFile(fno);
 		File file = new File(dto.getFpath());
+		
+		response.setHeader("Content-Disposition", "attachement;fileName="+file.getName());
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		response.setContentLength((int)file.length());
+		
 		try(BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
 			FileInputStream fis = new FileInputStream(file);){
 			
