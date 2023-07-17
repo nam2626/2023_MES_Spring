@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,8 +18,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class MainController {
+	
+	private FileMapper mapper;
+	
+	public MainController(FileMapper mapper) {
+		this.mapper = mapper;
+	}
+
 	@RequestMapping("/fileUpload.do")
 	public String fileUpload(@RequestParam(value = "file") MultipartFile[] fileload, HttpServletRequest request) {
+		List<FileDTO> list = null;
 		// 파일 업로드할 경로 설정
 		File root = new File("c:\\fileupload");
 		if (!root.exists())
@@ -47,7 +56,8 @@ public class MainController {
 				//실제 파일이 업로드 되는 부분
 				File file = new File(root, fileName);
 				fileload[i].transferTo(file);
-				fileResult += file.getAbsolutePath() + "<br>";
+				//파일 정보를 DB에 저장
+				mapper.insertFile(file.getAbsolutePath());
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -55,7 +65,8 @@ public class MainController {
 			}
 			
 		}
-		request.setAttribute("file_path", fileResult);
+		//전체 파일 정보 읽어오는 작업
+		list = mapper.selectAllFile();
 		return "result";
 	}
 	
