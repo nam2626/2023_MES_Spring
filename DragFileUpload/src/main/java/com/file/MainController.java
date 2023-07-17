@@ -1,6 +1,8 @@
 package com.file;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -113,6 +116,27 @@ public class MainController {
 	public String main() {
 		return "ajax_upload.html";
 	}
+	
+	@RequestMapping("/filedown")
+	public void fileDown(int fno, HttpServletResponse response) {
+		FileDTO dto = mapper.selectFile(fno);
+		
+		try(BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+			FileInputStream fis = new FileInputStream(dto.getFpath());){
+			
+			byte[] buffer = new byte[1024*1024];
+			
+			while(true) {
+				int count = fis.read(buffer);
+				if(count == -1) break;
+				bos.write(buffer,0,count);
+				bos.flush();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
 
 
