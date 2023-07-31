@@ -75,6 +75,44 @@ public class NaverController {
 		view.setViewName("naver_login_result");
 		return view;
 	}
+	
+	@RequestMapping("/naver/refresh")
+	public ModelAndView refreshTokken(HttpSession session, ModelAndView view) throws JSONException {
+		String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=refresh_token&"
+				+ "client_id=" + CLIENT_ID
+				+ "&client_secret=" + CLIENT_SECRET_ID
+				+ "&refresh_token=" + session.getAttribute("refreshTokken");
+		String result = requestNaverServer(apiURL, null);
+		if (result != null && !result.equals("")) {
+			JSONObject json = new JSONObject(result);
+			session.setAttribute("user", result);
+			session.setAttribute("accessTokken", json.getString("access_token"));
+			session.setAttribute("refreshTokken", json.getString("refresh_token"));
+		} else {
+			view.addObject("res", "로그인 실패");
+		}
+		view.setViewName("naver_login_result");
+		return view;
+	}
+	@RequestMapping("/naver/delete")
+	public ModelAndView deleteTokken(HttpSession session, ModelAndView view) throws JSONException {
+		String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=delete&"
+				+ "client_id=" + CLIENT_ID
+				+ "&client_secret=" + CLIENT_SECRET_ID
+				+ "&access_token=" + session.getAttribute("accessTokken")
+				+ "&service_provider=NAVER";
+		String result = requestNaverServer(apiURL, null);
+		System.out.println(result);	
+		session.invalidate();
+		view.setViewName("redirect:/");
+		return view;
+	}
+	
+	@RequestMapping("/naver/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
 
 	public String requestNaverServer(String apiURL, String header) {
 		StringBuilder res = new StringBuilder();
