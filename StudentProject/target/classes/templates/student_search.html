@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+*{
+	font-family: 'Gamja Flower', cursive;
+}
+h2{
+	text-align: center;
+}
+table{
+	border-collapse: collapse;
+	margin:0 auto;
+}
+th,td{
+	width: 200px;
+	border:1px solid black;
+	text-align: center;
+	padding: 10px 20px;
+}
+th{
+	background-color: #e9e9e9;
+}
+
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+	$(function(){
+		$("#btn_search").click(function(){
+			let data = `kind=${$("#sel_kind").val()}&search=${$("#txt_search").val()}`;
+			$.ajax({
+				url:"/search.do",
+				data:data,
+				dataType:"json",
+				type : "post",
+				success:function(r){
+					var tag = "";
+					
+					for(i=0;i<r.length;i++){
+						tag += "<tr>";
+						tag += "<td>"+r[i].sno+"</td>";
+						tag += "<td>"+r[i].name+"</td>";
+						tag += "<td>"+r[i].major+"</td>";
+						tag += "<td>"+r[i].score+"</td>";
+						tag += "</tr>";
+					}
+					
+					$("tbody").html(tag);
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<h2>학생 정보 관리 시스템</h2>
+	<hr>
+	<table>
+		<thead>
+			<tr>
+				<td colspan="4">
+					<select id="sel_kind">
+						<option value="sno">학번</option>
+						<option value="name">이름</option>
+						<option value="major_name">학과</option>
+					</select>
+					<input type="text" id="txt_search">
+					<button id="btn_search">검색</button></td>
+			</tr>
+			<tr>
+				<th>학번</th>
+				<th>이름</th>
+				<th>학과</th>
+				<th>평점</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="std : ${list}">
+				<td>[[${std.sno}]]</td>
+				<td>[[${std.name}]]</td>
+				<td>[[${std.major}]]</td>
+				<td>[[${std.score}]]</td>
+			</tr>
+			
+		</tbody>
+	</table>
+</body>
+</html>
+
+
+
+
+
+
+

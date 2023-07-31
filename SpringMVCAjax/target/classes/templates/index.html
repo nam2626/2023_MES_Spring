@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+<script>
+	$(function() {
+		$("button").click(function() {
+			let data = $(this).attr("class");
+			$.ajax({
+				url : "/callData",
+				data : 'data='+data,
+				type : "POST",
+				dataType : "json",
+				success : function(data) {
+					$("#result").html(data.result);
+					console.log('success');
+				},
+				error : function(xhr, error, msg) {
+					console.log(xhr.responseJSON.result);
+					console.log(xhr.status);
+					console.log(xhr.responseJSON);
+					$("#result").html(xhr.responseJSON.result);
+				}
+			});
+		});
+		
+	});
+</script>
+</head>
+<body>
+	<button type="button" class="true">정상 데이터 호출</button>
+	<button type="button" class="false">Exception 호출</button>
+	<hr>
+	<div id="result"></div>
+</body>
+</html>
