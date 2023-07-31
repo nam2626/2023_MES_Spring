@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:if="${session.user != null}">
+		<p th:text="${session.user}"></p>
+		<p><a href="/naver/profile">사용자 정보 읽기</a></p>
+		<div th:if="${userInfo != null}">[[${userInfo}]]</div>
+	</div>
+</body>
+</html>
