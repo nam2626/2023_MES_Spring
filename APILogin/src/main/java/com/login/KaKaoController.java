@@ -54,7 +54,41 @@ public class KaKaoController {
 
 		return view;
 	}
+	
+	@RequestMapping("/kakao/profile")
+	public ModelAndView getProfile(ModelAndView view, HttpSession session) {
+		String token = (String) session.getAttribute("accessToken"); // 카카오 로그인 접근 토큰;
+		String header = "Bearer " + token; // Bearer 다음에 공백 추가
 
+		String apiURL = "https://kapi.kakao.com/v2/user/me";
+
+		String result = requestKaKaoServer(apiURL, header);
+		
+		view.addObject("userInfo",result);
+		view.setViewName("kakao_login_result");
+		return view;
+	}
+	@RequestMapping("/kakao/delete")
+	public ModelAndView deleteTokken(HttpSession session, ModelAndView view) throws JSONException {
+		String token = (String) session.getAttribute("accessToken"); // 카카오 로그인 접근 토큰;
+		String apiURL = "https://kapi.kakao.com/v1/user/unlink";
+		String header = "Bearer " + token; // Bearer 다음에 공백 추가
+
+		String result = requestKaKaoServer(apiURL, header);
+		System.out.println(result);	
+		session.invalidate();
+		view.setViewName("redirect:/kakao/login");
+		return view;
+	}
+	@RequestMapping("/kakao/logout")
+	public String logout(HttpSession session) {
+		String apiURL = "https://kapi.kakao.com/v1/user/logout";
+		String token = (String) session.getAttribute("accessToken"); // 카카오 로그인 접근 토큰;
+		String header = "Bearer " + token; // Bearer 다음에 공백 추가
+		String result = requestKaKaoServer(apiURL, header);
+		session.invalidate();
+		return "redirect:/kakao/login";
+	}
 	private String requestKaKaoServer(String apiURL, String header) {
 		StringBuilder res = new StringBuilder();
 		try {
