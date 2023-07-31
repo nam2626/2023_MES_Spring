@@ -26,6 +26,7 @@ public class NaverController {
 	    apiURL += "&client_id=" + clientId;
 	    apiURL += "&redirect_uri=" + redirectURI;
 	    apiURL += "&state=" + state;
+	    view.addObject("apiURL", apiURL);
 	    session.setAttribute("state", state);
 	    view.setViewName("naver_login");
 		return view;
