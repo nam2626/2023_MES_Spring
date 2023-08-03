@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,17 +23,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class MainController {
-	
+
 	private FileMapper mapper;
-	
+
 	public MainController(FileMapper mapper) {
 		this.mapper = mapper;
 	}
+
 	@RequestMapping("/board_write")
 	public String boardWriteView() {
 		return "board_write";
 	}
-	
+
 	@RequestMapping("/fileUpload.do")
 	public String fileUpload(@RequestParam(value = "file") MultipartFile[] fileload, HttpServletRequest request) {
 		List<FileDTO> list = null;
@@ -39,45 +42,45 @@ public class MainController {
 		File root = new File("c:\\fileupload");
 		if (!root.exists())
 			root.mkdirs();
-		
+
 		// 현재 날짜 시간
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
 		String date = sdf.format(Calendar.getInstance().getTime());
-		
-		//저장한 파일 경로
+
+		// 저장한 파일 경로
 		String fileResult = "";
-		
-		for(int i=0;i<fileload.length;i++) {
-			if(fileload[i].getSize() == 0) continue;
-			
-			//서버에 파일을 저장할 때는 파일명 날짜시간으로 변경
-			//DB에 저장할 떄는 원본파일명과 변경된 파일명 모두 저장
-			//원본파일명
+
+		for (int i = 0; i < fileload.length; i++) {
+			if (fileload[i].getSize() == 0)
+				continue;
+
+			// 서버에 파일을 저장할 때는 파일명 날짜시간으로 변경
+			// DB에 저장할 떄는 원본파일명과 변경된 파일명 모두 저장
+			// 원본파일명
 			String originFileName = fileload[i].getOriginalFilename();
-			//저장할 파일명
-			String fileName = date + "_" 
-						+ i + originFileName.substring(originFileName.lastIndexOf('.'));
+			// 저장할 파일명
+			String fileName = date + "_" + i + originFileName.substring(originFileName.lastIndexOf('.'));
 			System.out.println("저장할 파일명 : " + fileName);
-			
+
 			try {
-				//실제 파일이 업로드 되는 부분
+				// 실제 파일이 업로드 되는 부분
 				File file = new File(root, fileName);
 				fileload[i].transferTo(file);
-				//파일 정보를 DB에 저장
+				// 파일 정보를 DB에 저장
 				mapper.insertFile(file.getAbsolutePath());
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
-		//전체 파일 정보 읽어오는 작업
+		// 전체 파일 정보 읽어오는 작업
 		list = mapper.selectAllFile();
 		request.setAttribute("list", list);
 		return "result";
 	}
-	
+
 	@RequestMapping("/fileAjaxUpload.do")
 	public ResponseEntity<String> fileAjaxUpload(@RequestParam(value = "file") MultipartFile[] fileload) {
 		ArrayList<String> list = new ArrayList<String>();
@@ -104,7 +107,7 @@ public class MainController {
 				// 실제 파일이 업로드 되는 부분
 				File file = new File(root + fileName);
 				fileload[i].transferTo(file);
-				//DB에 저장 후, 파일 다운로드 시키는 경로를 완성해서 list에 추가
+				// DB에 저장 후, 파일 다운로드 시키는 경로를 완성해서 list에 추가
 				list.add(file.getAbsolutePath());
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
@@ -115,87 +118,84 @@ public class MainController {
 
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping("/editerUpload.do")
-	public ResponseEntity<String> editorfileUpload(@RequestParam(value = "upload") MultipartFile fileload, HttpServletRequest request) {
+	public ResponseEntity<String> editorfileUpload(@RequestParam(value = "upload") MultipartFile fileload,
+			HttpServletRequest request) {
 		List<FileDTO> list = null;
 		// 파일 업로드할 경로 설정
 		File root = new File("c:\\fileupload");
 		if (!root.exists())
 			root.mkdirs();
-		
+
 		// 현재 날짜 시간
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
 		String date = sdf.format(Calendar.getInstance().getTime());
-		
-		//저장한 파일 경로
+
+		// 저장한 파일 경로
 		String fileResult = "";
+
+		// 서버에 파일을 저장할 때는 파일명 날짜시간으로 변경
+		// DB에 저장할 떄는 원본파일명과 변경된 파일명 모두 저장
+		// 원본파일명
+		String originFileName = fileload.getOriginalFilename();
+		// 저장할 파일명
+		String fileName = date + "_" + originFileName.substring(originFileName.lastIndexOf('.'));
+		System.out.println("저장할 파일명 : " + fileName);
 		
-		
-			
-			//서버에 파일을 저장할 때는 파일명 날짜시간으로 변경
-			//DB에 저장할 떄는 원본파일명과 변경된 파일명 모두 저장
-			//원본파일명
-			String originFileName = fileload.getOriginalFilename();
-			//저장할 파일명
-			String fileName = date + "_" 
-						+ originFileName.substring(originFileName.lastIndexOf('.'));
-			System.out.println("저장할 파일명 : " + fileName);
-			
-			try {
-				//실제 파일이 업로드 되는 부분
-				File file = new File(root, fileName);
-				fileload.transferTo(file);
-				//파일 정보를 DB에 저장
-				mapper.insertFile(file.getAbsolutePath());
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-			
+		HttpStatus status = HttpStatus.OK;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			// 실제 파일이 업로드 되는 부분
+			File file = new File(root, fileName);
+			fileload.transferTo(file);
+			// 파일 정보를 DB에 저장
+			int fno = mapper.selectFileNo();
+			mapper.insertImageFile(new FileDTO(fno, file.getAbsolutePath()));
+
+			map.put("uploaded", true);
+			map.put("url", "/filedown?fno=" + fno);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			map.put("uploaded", false);
+			map.put("message","파일 업로드 중 에러 발생");
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity(map, status);
+
 	}
-	
+
 	@RequestMapping("/ajax")
 	public String main() {
 		return "ajax_upload.html";
 	}
-	
+
 	@RequestMapping("/filedown")
 	public void fileDown(int fno, HttpServletResponse response) {
 		FileDTO dto = mapper.selectFile(fno);
 		File file = new File(dto.getFpath());
-		
-		response.setHeader("Content-Disposition", "attachement;fileName="+file.getName());
+
+		response.setHeader("Content-Disposition", "attachement;fileName=" + file.getName());
 		response.setHeader("Content-Transfer-Encoding", "binary");
-		response.setContentLength((int)file.length());
-		
-		try(BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
-			FileInputStream fis = new FileInputStream(file);){
-			
-			byte[] buffer = new byte[1024*1024];
-			
-			while(true) {
+		response.setContentLength((int) file.length());
+
+		try (BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+				FileInputStream fis = new FileInputStream(file);) {
+
+			byte[] buffer = new byte[1024 * 1024];
+
+			while (true) {
 				int count = fis.read(buffer);
-				if(count == -1) break;
-				bos.write(buffer,0,count);
+				if (count == -1)
+					break;
+				bos.write(buffer, 0, count);
 				bos.flush();
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-

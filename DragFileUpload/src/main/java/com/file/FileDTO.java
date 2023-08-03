@@ -10,6 +10,14 @@ public class FileDTO {
 	public FileDTO() {
 	}
 
+	
+	public FileDTO(int fno, String fpath) {
+		super();
+		this.fno = fno;
+		this.fpath = fpath;
+	}
+
+
 	public int getFno() {
 		return fno;
 	}

@@ -10,5 +10,7 @@ public interface FileMapper {
 	int insertFile(String absolutePath);
 	List<FileDTO> selectAllFile();
 	FileDTO selectFile(int fno);
+	int selectFileNo();
+	void insertImageFile(FileDTO fileDTO);
 
 }

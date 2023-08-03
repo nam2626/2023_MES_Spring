@@ -80,8 +80,8 @@
 	<script src="/js/UploadAdapter.js"></script>
 	<script>
 		function uploadAdaterPlugin(editor){
-			editor.plugins.get('FileRepository').createUploadAdaper = (loader) => {
-				return new UploadAdaer(loader);
+			editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+				return new UploadAdapter(loader);
 			}
 		}
 		$(function () {
@@ -98,7 +98,13 @@
 			});
 
 			ClassicEditor
-				.create(document.querySelector('#content'))
+				.create(document.querySelector('#content'),{
+					extraPlugins:[uploadAdaterPlugin]
+				})
+				.then(editor => {
+					console.log("에디터 초기화 완료", editor);
+					myEditor = editor;
+				})
 				.catch(error => {
 					console.error(error);
 				});

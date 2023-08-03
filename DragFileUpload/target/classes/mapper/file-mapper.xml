@@ -12,6 +12,12 @@
  	<select id="selectFile" parameterType="int" resultType="file">
 		select * from file_table where fno = #{fno}
  	</select>
+ 	<select id="selectFileNo" resultType="int">
+ 		select file_seq.nextval from dual
+ 	</select>
+ 	<insert id="insertImageFile" parameterType="file">
+		insert into file_table values(#{fno}, #{fpath})
+	</insert>
 </mapper>
 
 
