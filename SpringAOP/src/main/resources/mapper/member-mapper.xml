@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.member.mapper.MemberMapper">
+	<resultMap type="member" id="member">
+		<id column="id" property="id"/>
+		<result column="passwd" property="passwd"/>
+		<result column="name" property="name"/>
+		<result column="nick" property="nick"/>
+		<result column="grade_no" property="gradeNo"/>
+	</resultMap>
+  	<select id="login" parameterType="hashMap" resultMap="member">
+  		select * from board_member where id like #{id} and passwd like #{passwd}
+  	</select>
+	<select id="selectAllMember" resultMap="member">
+		select * from board_member
+	</select>  	
+	<insert id="insertMember" parameterType="member">
+		insert into board_member values(#{id},#{passwd},#{name},#{nick},#{gradeNo})
+	</insert>
+	<delete id="deleteMember" parameterType="string">
+		delete from board_member where id = #{id}
+	</delete>
+	<select id="selectMember" parameterType="string" resultMap="member">
+		select * from board_member where id like #{id}
+	</select>
+	<update id="updateMember" parameterType="member">
+		update board_member set name = #{name}, passwd=#{passwd},
+			nick = #{nick}, grade_no = #{gradeNo} where id like #{id}
+	</update>
+	<select id="selectAllGrade" resultType="hashMap">
+		select * from board_member_grade order by grade_no
+	</select>
+	<insert id="insertGrade" parameterType="hashMap">
+		insert into board_member_grade values(#{grade_no},#{grade_name})
+	</insert>
+	<select id="selectGrade" parameterType="string" resultType="hashMap">
+		select * from board_member_grade 
+			where grade_name like '%' || #{val} || '%' order by grade_no
+	</select>
+	<delete id="deleteGrade" parameterType="int">
+		delete from board_member_grade where grade_no = #{grade_no}
+	</delete>
+	<update id="updateGrade" parameterType="hashMap">
+		update board_member_grade set grade_name = #{grade_name}
+		where grade_no = #{grade_no}
+	</update>
+</mapper> 
+
+
+
+
+
+
+
+
+
+
+

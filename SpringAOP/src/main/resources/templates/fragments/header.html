@@ -1,0 +1,38 @@
+<style>
+	.main_menu{
+		list-style-type: none;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		width: 1200px;
+		margin:0 auto;
+		border:1px solid black;
+	}
+	li{
+		width: 200px;
+	}
+	.main_menu a{
+		color : black;
+		text-decoration: none;
+		font-size: 20px;
+		text-align: center;
+		display: inline-block;
+		width: 100%;
+		padding:20px 0px;
+	}
+</style>
+	<script th:if="${session.dto == null}">
+		alert('로그인 하셔야 이용할 수 있습니다.');
+		location.href="/";
+	</script>
+
+<ul class="main_menu">
+  <li><a href="/">홈</a></li>
+  <li><a href="/main">회원목록</a></li>
+  <li><a href="/register/view">회원추가</a></li>
+  <li><a href="/grade/view">등급관리</a></li>
+</ul>
+
+
+
+

@@ -34,7 +34,22 @@ public class MainController {
 	public String boardWriteView() {
 		return "board_write";
 	}
-
+	@RequestMapping("/board_write2")
+	public String boardWrite2View() {
+		return "board_write2";
+	}
+	
+	@RequestMapping("/boardWrite.do")
+	public String boardWrite(
+			@RequestParam(value = "file1") MultipartFile file1,
+			@RequestParam(value = "file2") MultipartFile file2,
+			BoardDTO dto) {
+		System.out.println(file1.getOriginalFilename());
+		System.out.println(file2.getOriginalFilename());
+		System.out.println(dto.toString());
+		return "index";
+	}
+	
 	@RequestMapping("/fileUpload.do")
 	public String fileUpload(@RequestParam(value = "file") MultipartFile[] fileload, HttpServletRequest request) {
 		List<FileDTO> list = null;
